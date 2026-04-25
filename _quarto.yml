@@ -1,0 +1,29 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Javier Bravo Bernal"
+  description: "AI & Data Science Portfolio – Mechatronics Engineer & M.S. Applied AI Candidate"
+  site-url: "https://jalfred259806.github.io/portfolio/"
+  navbar:
+    background: primary
+    search: false
+    left:
+      - text: "Home"
+        href: index.html
+      - text: "Projects"
+        href: index.html#projects
+      - text: "Skills"
+        href: index.html#skills
+      - text: "Contact"
+        href: index.html#contact
+
+format:
+  html:
+    theme: flatly
+    toc: false
+    css: styles.css
+
+editor:
+  mode: source
