@@ -13,8 +13,11 @@ if (!quarto::quarto_binary_sitrep()) {
 # Render the entire site into docs/
 quarto::quarto_render(".")
 
-# Stage all rendered docs
-system("git add docs/*")
+# Tell GitHub Pages NOT to run Jekyll on the rendered output
+file.create("docs/.nojekyll")
+
+# Stage all rendered docs (including the .nojekyll file)
+system("git add docs/")
 
 # Stage source files
 source_files <- c(

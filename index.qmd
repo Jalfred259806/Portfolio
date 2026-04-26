@@ -4,6 +4,7 @@ format:
   html:
     toc: false
     css: styles.css
+    page-layout: full
 engine: knitr
 ---
 
@@ -13,9 +14,8 @@ engine: knitr
 1 + 1
 ```
 
-<!-- ══════════════════════════════════════════
-     HERO SECTION
-══════════════════════════════════════════ -->
+```{=html}
+<!-- HERO SECTION -->
 <div class="hero">
   <div class="hero-left">
     <div class="hero-label">Data Science &amp; AI Portfolio</div>
@@ -45,9 +45,7 @@ engine: knitr
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     ABOUT SECTION
-══════════════════════════════════════════ -->
+<!-- ABOUT SECTION -->
 <div id="about" class="section">
   <div class="section-tag">// 01</div>
   <div class="section-title">About Me</div>
@@ -88,67 +86,63 @@ engine: knitr
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SKILLS SECTION
-══════════════════════════════════════════ -->
+<!-- SKILLS SECTION -->
 <div id="skills" class="section" style="background:#fff; max-width:100%; padding: 4rem;">
-<div style="max-width:1100px; margin:0 auto;">
-  <div class="section-tag">// 02</div>
-  <div class="section-title">Skills &amp; Tools</div>
-  <div class="skills-grid">
-    <div class="skill-group">
-      <h4>Programming</h4>
-      <span class="skill-tag">Python</span>
-      <span class="skill-tag">R</span>
-      <span class="skill-tag">SQL</span>
-      <span class="skill-tag">MATLAB</span>
-      <span class="skill-tag">C</span>
-    </div>
-    <div class="skill-group">
-      <h4>AI &amp; Machine Learning</h4>
-      <span class="skill-tag">Machine Learning</span>
-      <span class="skill-tag">Deep Learning</span>
-      <span class="skill-tag">scikit-learn</span>
-      <span class="skill-tag">TensorFlow</span>
-      <span class="skill-tag">Neural Networks</span>
-    </div>
-    <div class="skill-group">
-      <h4>Data &amp; Analytics</h4>
-      <span class="skill-tag">Tableau</span>
-      <span class="skill-tag">Power BI</span>
-      <span class="skill-tag">tidyverse</span>
-      <span class="skill-tag">Pandas</span>
-      <span class="skill-tag">ggplot2</span>
-    </div>
-    <div class="skill-group">
-      <h4>Cloud &amp; Platforms</h4>
-      <span class="skill-tag">Microsoft Azure</span>
-      <span class="skill-tag">Azure Data (DP-900)</span>
-      <span class="skill-tag">GitHub</span>
-      <span class="skill-tag">Quarto</span>
-    </div>
-    <div class="skill-group">
-      <h4>Automation &amp; Controls</h4>
-      <span class="skill-tag">Rockwell / Allen Bradley PLC</span>
-      <span class="skill-tag">TIA Portal</span>
-      <span class="skill-tag">SCADA / HMI</span>
-      <span class="skill-tag">IEC 61131-3</span>
-      <span class="skill-tag">LabVIEW</span>
-    </div>
-    <div class="skill-group">
-      <h4>Design &amp; Simulation</h4>
-      <span class="skill-tag">SolidWorks</span>
-      <span class="skill-tag">AutoCAD</span>
-      <span class="skill-tag">Raspberry Pi</span>
-      <span class="skill-tag">Sensor Integration</span>
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="section-tag">// 02</div>
+    <div class="section-title">Skills &amp; Tools</div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h4>Programming</h4>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">R</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">MATLAB</span>
+        <span class="skill-tag">C</span>
+      </div>
+      <div class="skill-group">
+        <h4>AI &amp; Machine Learning</h4>
+        <span class="skill-tag">Machine Learning</span>
+        <span class="skill-tag">Deep Learning</span>
+        <span class="skill-tag">scikit-learn</span>
+        <span class="skill-tag">TensorFlow</span>
+        <span class="skill-tag">Neural Networks</span>
+      </div>
+      <div class="skill-group">
+        <h4>Data &amp; Analytics</h4>
+        <span class="skill-tag">Tableau</span>
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">tidyverse</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">ggplot2</span>
+      </div>
+      <div class="skill-group">
+        <h4>Cloud &amp; Platforms</h4>
+        <span class="skill-tag">Microsoft Azure</span>
+        <span class="skill-tag">Azure Data (DP-900)</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">Quarto</span>
+      </div>
+      <div class="skill-group">
+        <h4>Automation &amp; Controls</h4>
+        <span class="skill-tag">Rockwell / Allen Bradley PLC</span>
+        <span class="skill-tag">TIA Portal</span>
+        <span class="skill-tag">SCADA / HMI</span>
+        <span class="skill-tag">IEC 61131-3</span>
+        <span class="skill-tag">LabVIEW</span>
+      </div>
+      <div class="skill-group">
+        <h4>Design &amp; Simulation</h4>
+        <span class="skill-tag">SolidWorks</span>
+        <span class="skill-tag">AutoCAD</span>
+        <span class="skill-tag">Raspberry Pi</span>
+        <span class="skill-tag">Sensor Integration</span>
+      </div>
     </div>
   </div>
 </div>
-</div>
 
-<!-- ══════════════════════════════════════════
-     PROJECTS SECTION
-══════════════════════════════════════════ -->
+<!-- PROJECTS SECTION -->
 <div id="projects" class="section">
   <div class="section-tag">// 03</div>
   <div class="section-title">Projects</div>
@@ -157,8 +151,6 @@ engine: knitr
     More coming as the M.S. program progresses.
   </p>
   <div class="projects-grid">
-
-    <!-- PROJECT 1 – NUMISMATICA MEXICO -->
     <div class="project-card">
       <div class="project-num">PROJECT · 01</div>
       <h3>Numismática México — Holiday Sales Strategy</h3>
@@ -175,8 +167,6 @@ engine: knitr
       </div>
       <a href="projects/numismatica-mexico.html" class="project-link">View Project →</a>
     </div>
-
-    <!-- PROJECT 2 – CREDIT RISK CLASSIFICATION -->
     <div class="project-card">
       <div class="project-num">PROJECT · 02</div>
       <h3>Credit Risk Classification</h3>
@@ -193,8 +183,6 @@ engine: knitr
       </div>
       <a href="projects/credit-risk.html" class="project-link">View Project →</a>
     </div>
-
-    <!-- PROJECT 3 – PLACEHOLDER -->
     <div class="project-card">
       <div class="project-num">PROJECT · 03</div>
       <h3>US Internal Migration &amp; Congressional Reapportionment</h3>
@@ -210,8 +198,6 @@ engine: knitr
       </div>
       <span class="badge-coming">⏳ Write-up Coming Soon</span>
     </div>
-
-    <!-- PROJECT 4 – PLACEHOLDER -->
     <div class="project-card">
       <div class="project-num">PROJECT · 04</div>
       <h3>Project Title Coming Soon</h3>
@@ -226,60 +212,51 @@ engine: knitr
       </div>
       <span class="badge-coming">⏳ Coming Soon</span>
     </div>
-
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     EXPERIENCE SECTION
-══════════════════════════════════════════ -->
+<!-- EXPERIENCE SECTION -->
 <div id="experience" class="section" style="background:#fff; max-width:100%; padding: 4rem;">
-<div style="max-width:1100px; margin:0 auto;">
-  <div class="section-tag">// 04</div>
-  <div class="section-title">Experience</div>
-  <div class="timeline">
-
-    <div class="timeline-item">
-      <div class="tl-meta">2024 – PRESENT</div>
-      <h4>Service Engineer</h4>
-      <div class="tl-company">Ecolab · New York, NY</div>
-      <ul>
-        <li>Designed a digital maintenance tracking system reducing downtime by 15%.</li>
-        <li>Led troubleshooting and installation of complex electromechanical systems.</li>
-        <li>Improved team productivity by 20% through mentoring and structured diagnostics.</li>
-        <li>Collaborated with sales and operations to align technical solutions with client needs.</li>
-      </ul>
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="section-tag">// 04</div>
+    <div class="section-title">Experience</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="tl-meta">2024 – PRESENT</div>
+        <h4>Service Engineer</h4>
+        <div class="tl-company">Ecolab · New York, NY</div>
+        <ul>
+          <li>Designed a digital maintenance tracking system reducing downtime by 15%.</li>
+          <li>Led troubleshooting and installation of complex electromechanical systems.</li>
+          <li>Improved team productivity by 20% through mentoring and structured diagnostics.</li>
+          <li>Collaborated with sales and operations to align technical solutions with client needs.</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-meta">2022 – 2024</div>
+        <h4>Quality Control Engineer</h4>
+        <div class="tl-company">Inglemed · Ecuador</div>
+        <ul>
+          <li>Diagnosed electromechanical faults in X-ray equipment; reduced error rates by 12%.</li>
+          <li>Analyzed performance data to validate technical solutions against national regulations.</li>
+          <li>Updated technical documentation and system schematics.</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-meta">2021 – 2022</div>
+        <h4>Business Operations &amp; Data Analyst</h4>
+        <div class="tl-company">Family Healthcare Business · Ecuador</div>
+        <ul>
+          <li>Built dashboards in Python, SQL, and Tableau to optimize inventory and customer retention.</li>
+          <li>Increased profitability by 8% through cost optimization modeling and supplier analysis.</li>
+          <li>Improved monthly revenue by 10% via demand forecasting and behavioral analytics.</li>
+        </ul>
+      </div>
     </div>
-
-    <div class="timeline-item">
-      <div class="tl-meta">2022 – 2024</div>
-      <h4>Quality Control Engineer</h4>
-      <div class="tl-company">Inglemed · Ecuador</div>
-      <ul>
-        <li>Diagnosed electromechanical faults in X-ray equipment; reduced error rates by 12%.</li>
-        <li>Analyzed performance data to validate technical solutions against national regulations.</li>
-        <li>Updated technical documentation and system schematics.</li>
-      </ul>
-    </div>
-
-    <div class="timeline-item">
-      <div class="tl-meta">2021 – 2022</div>
-      <h4>Business Operations &amp; Data Analyst</h4>
-      <div class="tl-company">Family Healthcare Business · Ecuador</div>
-      <ul>
-        <li>Built dashboards in Python, SQL, and Tableau to optimize inventory and customer retention.</li>
-        <li>Increased profitability by 8% through cost optimization modeling and supplier analysis.</li>
-        <li>Improved monthly revenue by 10% via demand forecasting and behavioral analytics.</li>
-      </ul>
-    </div>
-
   </div>
 </div>
-</div>
 
-<!-- ══════════════════════════════════════════
-     CONTACT SECTION
-══════════════════════════════════════════ -->
+<!-- CONTACT SECTION -->
 <div id="contact" class="section">
   <div class="section-tag">// 05</div>
   <div class="section-title">Get In Touch</div>
@@ -308,11 +285,14 @@ engine: knitr
     </div>
   </div>
 </div>
+```
 
-<!-- ══════════════════════════════════════════
-     FOOTER
-══════════════════════════════════════════ -->
+```{=html}
 <div class="site-footer">
-  Last Updated: `r format(Sys.time(), "%B %d, %Y")` &nbsp;·&nbsp;
-  Javier Bravo Bernal &nbsp;·&nbsp; Built with Quarto &amp; R
+  Last Updated:
+```
+`r format(Sys.time(), "%B %d, %Y")`
+```{=html}
+  &nbsp;·&nbsp; Javier Bravo Bernal &nbsp;·&nbsp; Built with Quarto &amp; R
 </div>
+```
