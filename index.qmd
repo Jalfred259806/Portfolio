@@ -158,36 +158,40 @@ engine: knitr
   </p>
   <div class="projects-grid">
 
-    <!-- PROJECT 1 – PLACEHOLDER -->
+    <!-- PROJECT 1 – NUMISMATICA MEXICO -->
     <div class="project-card">
       <div class="project-num">PROJECT · 01</div>
-      <h3>Project Title Coming Soon</h3>
+      <h3>Numismática México — Holiday Sales Strategy</h3>
       <p>
-        Full analysis write-up with annotated R/Python code, data visualizations,
-        and findings. Drop your <code>.qmd</code> file into the repo and link it here.
+        Tableau data story for a Mexican numismatics retailer. Identified the
+        star product (~25% of Q4 profit), quantified ad lift (64%), and produced
+        a focused regional marketing playbook.
       </p>
       <div class="project-tags">
-        <span class="project-tag">R</span>
-        <span class="project-tag">ggplot2</span>
-        <span class="project-tag">Data Analysis</span>
+        <span class="project-tag">Tableau</span>
+        <span class="project-tag">Data Visualization</span>
+        <span class="project-tag">Marketing Analytics</span>
+        <span class="project-tag">Storytelling</span>
       </div>
-      <span class="badge-coming">⏳ Coming Soon</span>
+      <a href="projects/numismatica-mexico.html" class="project-link">View Project →</a>
     </div>
 
-    <!-- PROJECT 2 – PLACEHOLDER -->
+    <!-- PROJECT 2 – CREDIT RISK CLASSIFICATION -->
     <div class="project-card">
       <div class="project-num">PROJECT · 02</div>
-      <h3>Project Title Coming Soon</h3>
+      <h3>Credit Risk Classification</h3>
       <p>
-        Full analysis write-up with annotated R/Python code, data visualizations,
-        and findings. Drop your <code>.qmd</code> file into the repo and link it here.
+        End-to-end scikit-learn pipeline benchmarking Logistic Regression,
+        Random Forest, and SVM on the German Credit dataset with repeated
+        stratified CV. ROC-AUC 0.78, with a discussion of the recall trade-off.
       </p>
       <div class="project-tags">
         <span class="project-tag">Python</span>
+        <span class="project-tag">scikit-learn</span>
         <span class="project-tag">Machine Learning</span>
-        <span class="project-tag">SQL</span>
+        <span class="project-tag">Classification</span>
       </div>
-      <span class="badge-coming">⏳ Coming Soon</span>
+      <a href="projects/credit-risk.html" class="project-link">View Project →</a>
     </div>
 
     <!-- PROJECT 3 – PLACEHOLDER -->

@@ -24,12 +24,16 @@ source_files <- c(
   "build_site.R"
 )
 
-# Stage any project write-up files (mp*.qmd, project*.qmd)
-project_qmds <- Sys.glob(c("mp*.qmd", "project*.qmd"))
+# Stage any project write-up files (root and projects/ subfolder)
+project_qmds <- Sys.glob(c("mp*.qmd", "project*.qmd", "projects/*.qmd"))
 
 for (f in c(source_files, project_qmds)) {
-  if (file.exists(f)) system(paste("git add", f))
+  if (file.exists(f)) system(paste("git add", shQuote(f)))
 }
+
+# Stage project assets (slide images, chart pngs) and downloadable source files
+if (dir.exists("projects/assets"))  system("git add projects/assets")
+if (dir.exists("projects/files"))   system("git add projects/files")
 
 message("✅ Site rendered and files staged. Now Commit & Push in RStudio's Git pane.")
 
