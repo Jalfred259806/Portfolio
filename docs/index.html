@@ -92,10 +92,33 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html#projects"> 
-<span class="menu-text">Projects</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="./projects/numismatica-mexico.html">
+ <span class="dropdown-text">Numismática México — Sales Strategy</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./projects/credit-risk.html">
+ <span class="dropdown-text">Credit Risk Classification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./projects/mp01.html">
+ <span class="dropdown-text">Campus Diversity After SFFA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./projects/mp02.html">
+ <span class="dropdown-text">American Time Use Survey</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./projects/mp03.html">
+ <span class="dropdown-text">US Migration &amp; Reapportionment</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="./index.html#skills"> 
 <span class="menu-text">Skills</span></a>
@@ -146,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
 <p><span class="stat-num">4+</span> <span class="stat-label">Years Industry Exp.</span></p>
 </div>
 <div class="stat-item">
-<p><span class="stat-num">3</span> <span class="stat-label">Engineering Domains</span></p>
+<p><span class="stat-num">5</span> <span class="stat-label">Projects Published</span></p>
 </div>
 <div class="stat-item">
 <p><span class="stat-num">M.S.</span> <span class="stat-label">Business Analytics</span></p>
@@ -232,38 +255,47 @@ ul.task-list li input[type="checkbox"] {
 <div class="grid">
 <div class="g-col-6">
 <div class="proj-card">
-<p><span class="proj-num">Project · 01</span> #### Python Project — Coming Soon Full write-up with annotated Python code, exploratory analysis, modeling, and business recommendations.</p>
+<p><span class="proj-num">Project · 01 · Tableau · Marketing Analytics</span> #### Numismática México — Holiday Sales Strategy Analyzed four years of sales data for a Mexican numismatics retailer using Tableau. Identified the star product, quantified ad lift, mapped state-level preferences, and produced a focused Q4 marketing playbook.</p>
 <div class="proj-tags">
-<p><span class="proj-tag gold">Python</span> <span class="proj-tag">Pandas</span> <span class="proj-tag">Machine Learning</span></p>
+<p><span class="proj-tag gold">Tableau</span> <span class="proj-tag">Marketing Analytics</span> <span class="proj-tag">Data Storytelling</span> <span class="proj-tag">Business Strategy</span></p>
 </div>
-<p><span class="badge-soon">⏳ Coming Soon</span></p>
+<p><a href="projects/numismatica-mexico.html" class="proj-link">Read Analysis →</a></p>
 </div>
 </div>
 <div class="g-col-6">
 <div class="proj-card">
-<p><span class="proj-num">Project · 02</span> #### Python Project — Coming Soon Full write-up with annotated Python code, exploratory analysis, modeling, and business recommendations.</p>
+<p><span class="proj-num">Project · 02 · Python · Machine Learning</span> #### Credit Risk Classification — German Credit Dataset End-to-end scikit-learn ML pipeline benchmarking Logistic Regression, Random Forest, and SVM on 1,000 loan applications. Explores the recall trade-off when the cost of a missed bad loan is asymmetric.</p>
 <div class="proj-tags">
-<p><span class="proj-tag gold">Python</span> <span class="proj-tag">SQL</span> <span class="proj-tag">Deep Learning</span></p>
+<p><span class="proj-tag gold">Python</span> <span class="proj-tag">scikit-learn</span> <span class="proj-tag">Classification</span> <span class="proj-tag">Cross-Validation</span></p>
 </div>
-<p><span class="badge-soon">⏳ Coming Soon</span></p>
+<p><a href="projects/credit-risk.html" class="proj-link">Read Analysis →</a></p>
 </div>
 </div>
 <div class="g-col-6">
 <div class="proj-card">
-<p><span class="proj-num">Project · 03</span> #### US Internal Migration &amp; Congressional Reapportionment Analyzed ACS state-to-state migration flows to forecast 2030 state populations and model congressional seat reapportionment using the Huntington-Hill method.</p>
+<p><span class="proj-num">Project · 03 · R · Policy Analytics</span> #### Campus Diversity After SFFA — National Enrollment Study Measured the demographic impact of the Supreme Court’s affirmative action ruling using 15 years of IPEDS data across 3,000+ U.S. institutions. Separates policy effects from long-term demographic trends.</p>
+<div class="proj-tags">
+<p><span class="proj-tag gold">R</span> <span class="proj-tag">IPEDS</span> <span class="proj-tag">Policy Analysis</span> <span class="proj-tag">tidyverse</span></p>
+</div>
+<p><a href="projects/mp01.html" class="proj-link">Read Analysis →</a></p>
+</div>
+</div>
+<div class="g-col-6">
+<div class="proj-card">
+<p><span class="proj-num">Project · 04 · R · Behavioral Analytics</span> #### How Americans Spend Their Time — 20 Years of ATUS Data Mined two decades of BLS time-use microdata to analyze how full-time workers balance work, sleep, and leisure. Reveals persistent gender gaps and the delta between ideal and actual daily time allocation.</p>
+<div class="proj-tags">
+<p><span class="proj-tag gold">R</span> <span class="proj-tag">ATUS</span> <span class="proj-tag">ggplot2</span> <span class="proj-tag">Labor Economics</span></p>
+</div>
+<p><a href="projects/mp02.html" class="proj-link">Read Analysis →</a></p>
+</div>
+</div>
+<div class="g-col-6">
+<div class="proj-card">
+<p><span class="proj-num">Project · 05 · R · Demographic Forecasting</span> #### US Internal Migration &amp; Congressional Reapportionment Built a migration-based demographic model using ACS flow data to forecast 2030 state populations and predict which states gain or lose seats in the 2032 congressional reapportionment via Huntington-Hill.</p>
 <div class="proj-tags">
 <p><span class="proj-tag gold">R</span> <span class="proj-tag">tidycensus</span> <span class="proj-tag">Forecasting</span> <span class="proj-tag">ACS Data</span></p>
 </div>
-<p><span class="badge-soon">⏳ Write-up Coming Soon</span></p>
-</div>
-</div>
-<div class="g-col-6">
-<div class="proj-card">
-<p><span class="proj-num">Project · 04</span> #### Business Analytics Dashboard — Coming Soon Business analysis and Tableau dashboard presented as a full deck. Upload your PowerPoint/PDF to embed it here as an interactive viewer.</p>
-<div class="proj-tags">
-<p><span class="proj-tag gold">Tableau</span> <span class="proj-tag">Business Analytics</span> <span class="proj-tag">Data Visualization</span></p>
-</div>
-<p><span class="badge-soon">⏳ Coming Soon</span></p>
+<p><a href="projects/mp03.html" class="proj-link">Read Analysis →</a></p>
 </div>
 </div>
 </div>
