@@ -1,0 +1,542 @@
+/*-- scss:defaults --*/
+
+// ── Google Fonts ───────────────────────────────────────────
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+// ── Color Palette ──────────────────────────────────────────
+$navy:         #0d1b2a;
+$navy-mid:     #162840;
+$navy-light:   #1e3a5f;
+$gold:         #c9a84c;
+$gold-light:   #e8c96a;
+$gold-pale:    #fdf6e3;
+$white:        #ffffff;
+$light-bg:     #f4f6f9;
+$muted:        #5a6a7e;
+$border-color: #dde2ea;
+
+// ── Quarto Bootstrap Variable Overrides ───────────────────
+$primary:           $navy;
+$secondary:         $gold;
+$success:           #2e8b57;
+$body-bg:           $light-bg;
+$body-color:        $navy;
+$link-color:        $navy-light;
+$link-hover-color:  $gold;
+
+// ── Typography ────────────────────────────────────────────
+$font-family-sans-serif: 'Inter', system-ui, sans-serif;
+$font-family-monospace:  'IBM Plex Mono', monospace;
+$font-size-base:         1rem;
+$line-height-base:       1.7;
+$headings-font-weight:   700;
+$headings-color:         $navy;
+
+// ── Navbar ────────────────────────────────────────────────
+$navbar-bg:              $navy;
+$navbar-fg:              rgba(255,255,255,0.85);
+$navbar-hl:              $gold;
+
+// ── Cards ─────────────────────────────────────────────────
+$card-bg:                $white;
+$card-border-color:      $border-color;
+$card-border-radius:     6px;
+$card-cap-bg:            $navy;
+$card-cap-color:         $white;
+
+// ── Code blocks ───────────────────────────────────────────
+$code-bg:                #0f2a1e;
+$code-color:             #c8e6d4;
+$code-block-bg:          #0f2a1e;
+
+// ── Callouts ──────────────────────────────────────────────
+$callout-color-note:     $navy-light;
+$callout-color-tip:      #2e8b57;
+$callout-color-warning:  $gold;
+
+/*-- scss:rules --*/
+
+// ── Navbar brand gold accent ──────────────────────────────
+.navbar-brand {
+  color: $gold !important;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.navbar .nav-link:hover {
+  color: $gold !important;
+}
+
+// ── Gold top border on all content ───────────────────────
+body::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, $gold, $gold-light, $gold);
+}
+
+// ── Page title / h1 styling ───────────────────────────────
+h1 { 
+  font-size: 2.6rem; 
+  font-weight: 800; 
+  letter-spacing: -0.02em;
+  color: $navy;
+}
+h2 { 
+  font-size: 1.6rem; 
+  font-weight: 700; 
+  letter-spacing: -0.01em;
+  color: $navy;
+  border-left: 4px solid $gold;
+  padding-left: 0.8rem;
+  margin-top: 2.5rem;
+}
+h3 { 
+  font-size: 1.15rem; 
+  font-weight: 600; 
+  color: $navy-light;
+}
+
+// ── Hero banner ───────────────────────────────────────────
+.hero-banner {
+  background: $navy;
+  color: $white;
+  padding: 4.5rem 3rem;
+  margin: -1rem -1rem 2.5rem -1rem;
+  border-bottom: 3px solid $gold;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: $font-family-monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    color: $gold;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: $gold;
+    }
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: $white;
+    border: none;
+    margin: 0 0 0.4rem;
+    line-height: 1.08;
+
+    span { color: $gold; }
+  }
+
+  .hero-role {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.01em;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.78);
+    font-weight: 300;
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .btn-hero-gold {
+    background: $gold;
+    color: $navy;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: background 0.18s;
+    &:hover { background: $gold-light; color: $navy; }
+  }
+  .btn-hero-outline {
+    border: 1px solid rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+    font-size: 0.85rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: border-color 0.18s, color 0.18s;
+    &:hover { border-color: $gold; color: $gold; }
+  }
+}
+
+// ── Stat cards inside hero ────────────────────────────────
+.stat-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+.stat-item {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-left: 3px solid $gold;
+  border-radius: 6px;
+  padding: 1rem 1.4rem;
+  min-width: 140px;
+
+  .stat-num {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: $gold;
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: $font-family-monospace;
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+}
+
+// ── Section eyebrow label ─────────────────────────────────
+.eyebrow {
+  font-family: $font-family-monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: $gold;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 1px;
+    background: $gold;
+  }
+}
+
+// ── Skill pills ───────────────────────────────────────────
+.skill-pill {
+  display: inline-block;
+  background: $light-bg;
+  color: $muted;
+  font-family: $font-family-monospace;
+  font-size: 0.72rem;
+  padding: 0.22rem 0.65rem;
+  border-radius: 3px;
+  border: 1px solid $border-color;
+  margin: 0.2rem 0.15rem 0.2rem 0;
+  transition: all 0.15s;
+
+  &:hover {
+    background: $navy;
+    color: $gold;
+    border-color: $navy;
+  }
+
+  &.core {
+    background: $gold-pale;
+    color: #7a5c10;
+    border-color: #dfc97a;
+    font-weight: 500;
+  }
+}
+
+// ── Project cards ─────────────────────────────────────────
+.proj-card {
+  background: $white;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  padding: 1.6rem;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 1px 4px rgba(13,27,42,0.07);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: $gold;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  &:hover {
+    box-shadow: 0 10px 32px rgba(13,27,42,0.13);
+    transform: translateY(-2px);
+    &::before { transform: scaleX(1); }
+  }
+
+  .proj-num {
+    font-family: $font-family-monospace;
+    font-size: 0.68rem;
+    color: $gold;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $navy;
+    margin-bottom: 0.5rem;
+    border: none;
+    padding: 0;
+  }
+  p {
+    font-size: 0.88rem;
+    color: $muted;
+    line-height: 1.65;
+    margin-bottom: 0.9rem;
+  }
+  .proj-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
+  }
+  .proj-tag {
+    font-family: $font-family-monospace;
+    font-size: 0.67rem;
+    background: $light-bg;
+    color: $muted;
+    padding: 0.17rem 0.52rem;
+    border-radius: 3px;
+    border: 1px solid $border-color;
+    &.gold { background: $gold-pale; color: #7a5c10; border-color: #dfc97a; }
+  }
+  .badge-soon {
+    font-family: $font-family-monospace;
+    font-size: 0.67rem;
+    background: #f9f3e3;
+    color: #9a7d3a;
+    border: 1px solid #e5d9b6;
+    padding: 0.17rem 0.52rem;
+    border-radius: 3px;
+    display: inline-block;
+  }
+}
+
+// ── Timeline (experience) ─────────────────────────────────
+.timeline {
+  position: relative;
+  padding-left: 1.8rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 0;
+    width: 1px;
+    background: $border-color;
+  }
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 2.2rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -2.15rem; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: $gold;
+    border: 2px solid $light-bg;
+    box-shadow: 0 0 0 2px $gold;
+  }
+
+  .tl-date {
+    font-family: $font-family-monospace;
+    font-size: 0.7rem;
+    color: $gold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  h4 {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: $navy;
+    margin: 0 0 0.15rem;
+    border: none;
+    padding: 0;
+  }
+  .tl-company {
+    font-size: 0.85rem;
+    color: $muted;
+    margin-bottom: 0.6rem;
+  }
+  ul li {
+    font-size: 0.87rem;
+    color: $muted;
+    margin-bottom: 0.28rem;
+    line-height: 1.6;
+  }
+}
+
+// ── Info card (education sidebar) ────────────────────────
+.info-card {
+  background: $navy;
+  border-radius: 6px;
+  padding: 1.6rem;
+  border-top: 3px solid $gold;
+  color: $white;
+
+  h4 {
+    font-family: $font-family-monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: $gold;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 1.1rem;
+    border: none;
+    padding: 0;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    font-size: 0.87rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.85);
+    line-height: 1.4;
+
+    &:last-child { border-bottom: none; }
+
+    em {
+      display: block;
+      font-style: normal;
+      font-family: $font-family-monospace;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.4);
+      margin-top: 0.12rem;
+    }
+  }
+}
+
+// ── Contact panel ─────────────────────────────────────────
+.contact-panel {
+  background: $navy;
+  border-radius: 6px;
+  padding: 3rem;
+  border-top: 3px solid $gold;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -50px; right: -50px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 36px solid rgba(201,168,76,0.07);
+    pointer-events: none;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: $white;
+    border: none;
+    padding: 0;
+    margin-bottom: 0.5rem;
+  }
+  .contact-sub {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.92rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  .c-link {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 0.88rem;
+    margin-bottom: 0.7rem;
+    transition: color 0.15s;
+
+    &:hover { color: $gold; }
+  }
+  .c-badge {
+    font-family: $font-family-monospace;
+    font-size: 0.64rem;
+    font-weight: 500;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: $gold;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    min-width: 56px;
+    text-align: center;
+  }
+}
+
+// ── Divider ───────────────────────────────────────────────
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, $gold, transparent);
+  opacity: 0.3;
+  margin: 2.5rem 0;
+}
+
+// ── Footer ────────────────────────────────────────────────
+.page-footer {
+  background: $navy !important;
+  border-top: 1px solid rgba(201,168,76,0.15) !important;
+  color: rgba(255,255,255,0.4) !important;
+  font-family: $font-family-monospace;
+  font-size: 0.72rem;
+}
+
+// ── Responsive ────────────────────────────────────────────
+@media (max-width: 768px) {
+  .hero-banner { padding: 3rem 1.5rem; }
+  .stat-grid { gap: 0.7rem; }
+  .stat-item { min-width: 120px; }
+  .contact-panel { padding: 2rem 1.5rem; }
+}

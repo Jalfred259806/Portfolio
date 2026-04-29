@@ -20,13 +20,17 @@ website:
         href: index.html#experience
       - text: "Contact"
         href: index.html#contact
+  page-footer:
+    center: "Javier Bravo Bernal · Business Analytics Portfolio · Built with Quarto"
+    background: dark
 
 format:
   html:
-    theme: litera
+    theme:
+      - litera
+      - custom.scss
     toc: false
-    css: styles.css
-    html-math-method: plain
+    page-layout: full
 
 editor:
   mode: source
