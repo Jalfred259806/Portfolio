@@ -13,7 +13,17 @@ website:
       - text: "Home"
         href: index.html
       - text: "Projects"
-        href: index.html#projects
+        menu:
+          - text: "Numismática México — Sales Strategy"
+            href: projects/numismatica-mexico.html
+          - text: "Credit Risk Classification"
+            href: projects/credit-risk.html
+          - text: "Campus Diversity After SFFA"
+            href: mp01.html
+          - text: "American Time Use Survey"
+            href: mp02.html
+          - text: "US Migration & Reapportionment"
+            href: mp03.html
       - text: "Skills"
         href: index.html#skills
       - text: "Experience"

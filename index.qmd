@@ -42,8 +42,8 @@ and AI, I bridge the gap between physical systems and data-driven decisions.
 [Years Industry Exp.]{.stat-label}
 :::
 ::: {.stat-item}
-[3]{.stat-num}
-[Engineering Domains]{.stat-label}
+[5]{.stat-num}
+[Projects Published]{.stat-label}
 :::
 ::: {.stat-item}
 [M.S.]{.stat-num}
@@ -185,45 +185,87 @@ I can apply both my engineering precision and analytical toolkit to real busines
 
 ::: {.g-col-6}
 ::: {.proj-card}
-[Project · 01]{.proj-num}
-#### Python Project — Coming Soon
-Full write-up with annotated Python code, exploratory analysis,
-modeling, and business recommendations.
+[Project · 01 · Tableau · Marketing Analytics]{.proj-num}
+#### Numismática México — Holiday Sales Strategy
+Analyzed four years of sales data for a Mexican numismatics retailer using
+Tableau. Identified the star product, quantified ad lift, mapped
+state-level preferences, and produced a focused Q4 marketing playbook.
 
 ::: {.proj-tags}
-[Python]{.proj-tag .gold}
-[Pandas]{.proj-tag}
-[Machine Learning]{.proj-tag}
+[Tableau]{.proj-tag .gold}
+[Marketing Analytics]{.proj-tag}
+[Data Storytelling]{.proj-tag}
+[Business Strategy]{.proj-tag}
 :::
 
-[⏳ Coming Soon]{.badge-soon}
+[Read Analysis →](projects/numismatica-mexico.html){.proj-link}
 :::
 :::
 
 ::: {.g-col-6}
 ::: {.proj-card}
-[Project · 02]{.proj-num}
-#### Python Project — Coming Soon
-Full write-up with annotated Python code, exploratory analysis,
-modeling, and business recommendations.
+[Project · 02 · Python · Machine Learning]{.proj-num}
+#### Credit Risk Classification — German Credit Dataset
+End-to-end scikit-learn ML pipeline benchmarking Logistic Regression,
+Random Forest, and SVM on 1,000 loan applications. Explores the
+recall trade-off when the cost of a missed bad loan is asymmetric.
 
 ::: {.proj-tags}
 [Python]{.proj-tag .gold}
-[SQL]{.proj-tag}
-[Deep Learning]{.proj-tag}
+[scikit-learn]{.proj-tag}
+[Classification]{.proj-tag}
+[Cross-Validation]{.proj-tag}
 :::
 
-[⏳ Coming Soon]{.badge-soon}
+[Read Analysis →](projects/credit-risk.html){.proj-link}
 :::
 :::
 
 ::: {.g-col-6}
 ::: {.proj-card}
-[Project · 03]{.proj-num}
+[Project · 03 · R · Policy Analytics]{.proj-num}
+#### Campus Diversity After SFFA — National Enrollment Study
+Measured the demographic impact of the Supreme Court's affirmative action
+ruling using 15 years of IPEDS data across 3,000+ U.S. institutions.
+Separates policy effects from long-term demographic trends.
+
+::: {.proj-tags}
+[R]{.proj-tag .gold}
+[IPEDS]{.proj-tag}
+[Policy Analysis]{.proj-tag}
+[gt]{.proj-tag}
+:::
+
+[Read Analysis →](mp01.html){.proj-link}
+:::
+:::
+
+::: {.g-col-6}
+::: {.proj-card}
+[Project · 04 · R · Behavioral Analytics]{.proj-num}
+#### How Americans Spend Their Time — 20 Years of ATUS Data
+Mined two decades of BLS time-use microdata to analyze how full-time
+workers balance work, sleep, and leisure. Reveals persistent gender gaps
+and the gap between ideal and actual daily time allocation.
+
+::: {.proj-tags}
+[R]{.proj-tag .gold}
+[ATUS]{.proj-tag}
+[ggplot2]{.proj-tag}
+[Labor Economics]{.proj-tag}
+:::
+
+[Read Analysis →](mp02.html){.proj-link}
+:::
+:::
+
+::: {.g-col-6}
+::: {.proj-card}
+[Project · 05 · R · Demographic Forecasting]{.proj-num}
 #### US Internal Migration & Congressional Reapportionment
-Analyzed ACS state-to-state migration flows to forecast 2030 state
-populations and model congressional seat reapportionment using the
-Huntington-Hill method.
+Built a migration-based demographic model using ACS flow data to forecast
+2030 state populations and predict which states gain or lose seats in
+the 2032 congressional reapportionment via Huntington-Hill.
 
 ::: {.proj-tags}
 [R]{.proj-tag .gold}
@@ -232,24 +274,7 @@ Huntington-Hill method.
 [ACS Data]{.proj-tag}
 :::
 
-[⏳ Write-up Coming Soon]{.badge-soon}
-:::
-:::
-
-::: {.g-col-6}
-::: {.proj-card}
-[Project · 04]{.proj-num}
-#### Business Analytics Dashboard — Coming Soon
-Business analysis and Tableau dashboard presented as a full deck.
-Upload your PowerPoint/PDF to embed it here as an interactive viewer.
-
-::: {.proj-tags}
-[Tableau]{.proj-tag .gold}
-[Business Analytics]{.proj-tag}
-[Data Visualization]{.proj-tag}
-:::
-
-[⏳ Coming Soon]{.badge-soon}
+[Read Analysis →](mp03.html){.proj-link}
 :::
 :::
 
