@@ -26,6 +26,7 @@ format:
     theme: litera
     toc: false
     css: styles.css
+    html-math-method: plain
 
 editor:
   mode: source

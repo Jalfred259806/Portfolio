@@ -4,6 +4,8 @@ format:
   html:
     toc: false
     css: styles.css
+    page-layout: full
+    theme: none
 engine: knitr
 ---
 
