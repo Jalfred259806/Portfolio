@@ -233,10 +233,10 @@ Separates policy effects from long-term demographic trends.
 [R]{.proj-tag .gold}
 [IPEDS]{.proj-tag}
 [Policy Analysis]{.proj-tag}
-[gt]{.proj-tag}
+[tidyverse]{.proj-tag}
 :::
 
-[Read Analysis →](mp01.html){.proj-link}
+[Read Analysis →](projects/mp01.html){.proj-link}
 :::
 :::
 
@@ -246,7 +246,7 @@ Separates policy effects from long-term demographic trends.
 #### How Americans Spend Their Time — 20 Years of ATUS Data
 Mined two decades of BLS time-use microdata to analyze how full-time
 workers balance work, sleep, and leisure. Reveals persistent gender gaps
-and the gap between ideal and actual daily time allocation.
+and the delta between ideal and actual daily time allocation.
 
 ::: {.proj-tags}
 [R]{.proj-tag .gold}
@@ -255,7 +255,7 @@ and the gap between ideal and actual daily time allocation.
 [Labor Economics]{.proj-tag}
 :::
 
-[Read Analysis →](mp02.html){.proj-link}
+[Read Analysis →](projects/mp02.html){.proj-link}
 :::
 :::
 
@@ -274,7 +274,7 @@ the 2032 congressional reapportionment via Huntington-Hill.
 [ACS Data]{.proj-tag}
 :::
 
-[Read Analysis →](mp03.html){.proj-link}
+[Read Analysis →](projects/mp03.html){.proj-link}
 :::
 :::
 
