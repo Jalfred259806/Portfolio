@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 # ============================================================
-#  build_site.R  –  Render & stage Javier's portfolio
+#  build_site.R  —  Render & stage Javier's portfolio
 # ============================================================
 
 if (!require("quarto")) install.packages("quarto")
@@ -10,16 +10,13 @@ if (!quarto::quarto_binary_sitrep()) {
   stop("Something is wrong with your quarto installation.")
 }
 
-# Render the entire site into docs/
+# Render entire site into docs/
 quarto::quarto_render(".")
 
-# Tell GitHub Pages NOT to run Jekyll on the rendered output
-file.create("docs/.nojekyll")
+# Stage rendered output
+system("git add docs/*")
 
-# Stage all rendered docs (including the .nojekyll file)
-system("git add docs/")
-
-# Stage source files
+# Stage all source files
 source_files <- c(
   "index.qmd",
   "styles.css",
@@ -27,17 +24,17 @@ source_files <- c(
   "build_site.R"
 )
 
-# Stage any project write-up files (root and projects/ subfolder)
-project_qmds <- Sys.glob(c("mp*.qmd", "project*.qmd", "projects/*.qmd"))
+# Stage any project write-up pages when added later
+project_pages <- Sys.glob(c("project*.qmd", "mp*.qmd"))
 
-for (f in c(source_files, project_qmds)) {
+for (f in c(source_files, project_pages)) {
   if (file.exists(f)) system(paste("git add", shQuote(f)))
 }
 
-# Stage project assets (slide images, chart pngs) and downloadable source files
-if (dir.exists("projects/assets"))  system("git add projects/assets")
-if (dir.exists("projects/files"))   system("git add projects/files")
+# Stage any PDFs placed in docs/ (e.g. embedded business analysis)
+system("git add docs/*.pdf 2>/dev/null || true")
 
-message("✅ Site rendered and files staged. Now Commit & Push in RStudio's Git pane.")
+message("✅ Site rendered and files staged.")
+message("   → Now open the Git pane in RStudio, Commit, and Push.")
 
 if (!any(grepl("rstudio", search()))) { q("no") }
