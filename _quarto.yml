@@ -1,6 +1,13 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - index.qmd
+    - projects/numismatica-mexico.qmd
+    - projects/credit-risk.qmd
+    - projects/mp01.qmd
+    - projects/mp02.qmd
+    - projects/mp03.qmd
 
 website:
   title: "Javier Bravo Bernal"
