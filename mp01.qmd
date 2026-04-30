@@ -129,7 +129,7 @@ IPEDS <- acquire_ipeds_data() |>
 distinct_institutions <- IPEDS |> distinct(institution_id) |> nrow()
 ```
 
-The dataset covers **`r scales::comma(distinct_institutions)` institutions** across all 50 states.
+The dataset covers **3,000+ institutions** across all 50 states.
 
 ---
 
