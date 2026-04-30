@@ -198,7 +198,7 @@ state-level preferences, and produced a focused Q4 marketing playbook.
 [Business Strategy]{.proj-tag}
 :::
 
-[Read Analysis →](projects/numismatica-mexico.html){.proj-link}
+[Read Analysis →](numismatica-mexico.html){.proj-link}
 :::
 :::
 
@@ -217,7 +217,7 @@ recall trade-off when the cost of a missed bad loan is asymmetric.
 [Cross-Validation]{.proj-tag}
 :::
 
-[Read Analysis →](projects/credit-risk.html){.proj-link}
+[Read Analysis →](credit-risk.html){.proj-link}
 :::
 :::
 
@@ -236,7 +236,7 @@ Separates policy effects from long-term demographic trends.
 [tidyverse]{.proj-tag}
 :::
 
-[Read Analysis →](projects/mp01.html){.proj-link}
+[Read Analysis →](mp01.html){.proj-link}
 :::
 :::
 
@@ -255,7 +255,7 @@ and the delta between ideal and actual daily time allocation.
 [Labor Economics]{.proj-tag}
 :::
 
-[Read Analysis →](projects/mp02.html){.proj-link}
+[Read Analysis →](mp02.html){.proj-link}
 :::
 :::
 
@@ -274,7 +274,7 @@ the 2032 congressional reapportionment via Huntington-Hill.
 [ACS Data]{.proj-tag}
 :::
 
-[Read Analysis →](projects/mp03.html){.proj-link}
+[Read Analysis →](mp03.html){.proj-link}
 :::
 :::
 

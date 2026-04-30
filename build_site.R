@@ -13,21 +13,21 @@ if (!quarto::quarto_binary_sitrep()) {
 # Render entire site into docs/
 quarto::quarto_render(".")
 
-# Stage ALL rendered output — including docs/projects/ subfolder
+# Stage ALL rendered output recursively
 system("git add -A docs/")
 
-# Stage all source files at root
-for (f in c("index.qmd", "custom.scss", "_quarto.yml", "build_site.R")) {
-  if (file.exists(f)) system(paste("git add", shQuote(f)))
-}
-
-# Stage all source files in projects/ subfolder
-project_files <- Sys.glob("projects/*.qmd")
-for (f in project_files) {
+# Stage all source .qmd files at root level
+qmd_files <- Sys.glob("*.qmd")
+for (f in qmd_files) {
   system(paste("git add", shQuote(f)))
 }
 
-message("✅ Site rendered and ALL files staged (including docs/projects/).")
-message("   → Git pane: Commit all → Push")
+# Stage config and style files
+for (f in c("custom.scss", "_quarto.yml", "build_site.R")) {
+  if (file.exists(f)) system(paste("git add", shQuote(f)))
+}
+
+message("✅ Done! All files staged.")
+message("   → Git pane: Commit → Push")
 
 if (!any(grepl("rstudio", search()))) { q("no") }
