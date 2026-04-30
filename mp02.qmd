@@ -1,6 +1,5 @@
 ---
 title: "How Americans Spend Their Time — 20 Years of Behavioral Data"
-description: "Analyzing 20 years of ATUS microdata to uncover how full-time workers balance work, sleep, and leisure — and what the data says about modern work-life balance"
 page-layout: full
 format:
   html:
@@ -17,7 +16,7 @@ Project 04 · R · Behavioral Analytics · Labor Economics
 :::
 
 # How Americans Spend Their Time
-### 20 Years of the American Time Use Survey (2003–2024)
+### 20 Years of the American Time Use Survey (2003-2024)
 
 ::: {.lede}
 Every year, the Bureau of Labor Statistics asks thousands of Americans to recount exactly
@@ -26,7 +25,7 @@ answer a deceptively simple question: do full-time workers actually have time fo
 :::
 
 ::: {.tag-row}
-<span>R</span><span>tidyverse</span><span>ATUS</span><span>ggplot2</span><span>Behavioral Analytics</span><span>Labor Economics</span>
+<span>R</span><span>tidyverse</span><span>ATUS</span><span>ggplot2</span><span>Labor Economics</span>
 :::
 :::
 
@@ -34,24 +33,19 @@ answer a deceptively simple question: do full-time workers actually have time fo
 
 ## Executive Summary
 
-Using the **American Time Use Survey (ATUS) 2003–2024 multi-year microdata files**,
+Using the **American Time Use Survey (ATUS) 2003-2024 multi-year microdata files**,
 this analysis examines how full-time workers allocate their daily hours across work,
-sleep, leisure, and personal care — and how those patterns have shifted over two decades.
+sleep, leisure, and personal care.
 
 Key findings:
 
-- Full-time workers average significantly more than 8 hours of work per day when commuting and work-related activities are included
-- Leisure time for full-time workers has remained compressed, with meaningful differences by gender
-- Sleep averages fall below recommended levels for a substantial share of the working population
-- The gap between an "ideal" day and a "typical" day reveals systematic trade-offs in how Americans manage time
+- Full-time workers average significantly more than 8 hours of work per day
+- Leisure time is compressed with persistent differences by gender
+- The gap between an ideal day and a typical day reveals systematic trade-offs
 
 ---
 
 ## Data Acquisition
-
-The ATUS multi-year microdata files are downloaded from the BLS ATUS extract system.
-Three tables are used: respondent-level data (`resp`), roster demographics (`rost`),
-and activity-level records (`act`). Files are cached locally.
 
 ```{r}
 #| label: load-data
@@ -60,7 +54,6 @@ and activity-level records (`act`). Files are cached locally.
 
 library(tidyverse)
 library(glue)
-library(readxl)
 
 load_atus_data <- function(file_base = c("resp", "rost", "act")) {
   if (!dir.exists(file.path("data", "mp02"))) {
@@ -68,7 +61,6 @@ load_atus_data <- function(file_base = c("resp", "rost", "act")) {
   }
   file_base     <- match.arg(file_base)
   file_name_out <- file.path("data", "mp02", glue("atus{file_base}_0324.dat"))
-
   if (!file.exists(file_name_out)) {
     zip_file <- file.path("data", "mp02", glue("atus{file_base}_0324.zip"))
     download.file(
@@ -80,34 +72,27 @@ load_atus_data <- function(file_base = c("resp", "rost", "act")) {
   read_csv(file_name_out, show_col_types = FALSE)
 }
 
-df_resp      <- load_atus_data("resp")
-df_rost      <- load_atus_data("rost")
-df_act       <- load_atus_data("act")
-df_act_codes <- read_excel(
-  file.path("data", "mp02", "lexiconwex.xls"),
-  sheet = "Lexicon", skip = 1
-) |> select(activity_code = 1, activity_name = 2)
+df_resp <- load_atus_data("resp")
+df_rost <- load_atus_data("rost")
+df_act  <- load_atus_data("act")
 ```
 
 ---
 
 ## Analysis
 
-### 1. How Full-Time Workers Spend a Typical Workday
+### How Full-Time Workers Spend a Typical Day
 
 ```{r}
 #| label: worker-time
 #| message: false
 #| warning: false
-#| fig-cap: "Average daily hours by activity category — full-time workers"
+#| fig-cap: "Average daily hours by activity category"
 
-full_time_ids <- df_resp |>
-  filter(TELFS == 1) |>
-  pull(TUCASEID)
+full_time_ids <- df_resp |> filter(TELFS == 1) |> pull(TUCASEID)
 
 worker_activities <- df_act |>
   filter(TUCASEID %in% full_time_ids) |>
-  left_join(df_act_codes, by = c("TRCODE" = "activity_code")) |>
   mutate(category = case_when(
     str_starts(as.character(TRCODE), "01") ~ "Work",
     str_starts(as.character(TRCODE), "03") ~ "Sleep",
@@ -131,57 +116,22 @@ worker_activities |>
     Leisure = "#c9a84c", `Personal Care` = "#2e8b57"
   )) +
   scale_y_continuous(limits = c(0, 12), expand = c(0, 0)) +
-  labs(
-    title    = "How Full-Time Workers Spend a Typical Day",
-    subtitle = "Average hours by activity category · ATUS 2003–2024",
-    x = NULL, y = "Average Hours per Day"
-  ) +
+  labs(title = "How Full-Time Workers Spend a Typical Day",
+       subtitle = "Average hours by activity · ATUS 2003-2024",
+       x = NULL, y = "Average Hours per Day") +
   theme_minimal(base_size = 13)
 ```
 
-### 2. Work Time Trends Over 20 Years
+### Gender Differences in Leisure Time
 
 ```{r}
-#| label: work-trend
-#| fig-cap: "Average daily work hours for full-time workers, 2003–2024"
+#| label: gender-leisure
+#| fig-cap: "Average daily leisure hours by gender"
 
 df_resp |>
   filter(TELFS == 1) |>
   select(TUCASEID, year = TUYEAR) |>
-  left_join(
-    df_act |>
-      mutate(is_work = str_starts(as.character(TRCODE), "01")) |>
-      group_by(TUCASEID) |>
-      summarize(work_mins = sum(TUACTDUR24[is_work], na.rm = TRUE)),
-    by = "TUCASEID"
-  ) |>
-  group_by(year) |>
-  summarize(avg_work_hrs = mean(work_mins / 60, na.rm = TRUE)) |>
-  ggplot(aes(x = year, y = avg_work_hrs)) +
-  geom_line(color = "#0d1b2a", linewidth = 1.2) +
-  geom_point(color = "#c9a84c", size = 3) +
-  scale_y_continuous(limits = c(6, 10)) +
-  labs(
-    title    = "Average Daily Work Hours — Full-Time Workers",
-    subtitle = "ATUS 2003–2024 (excludes 2020 COVID year)",
-    x = NULL, y = "Average Hours"
-  ) +
-  theme_minimal(base_size = 13)
-```
-
-### 3. Gender Differences in Leisure Time
-
-```{r}
-#| label: gender-leisure
-#| fig-cap: "Average daily leisure hours by gender — full-time workers"
-
-full_time_with_sex <- df_resp |>
-  filter(TELFS == 1) |>
-  select(TUCASEID, year = TUYEAR) |>
-  left_join(df_rost |> filter(TULINENO == 1) |> select(TUCASEID, sex = TESEX),
-            by = "TUCASEID")
-
-full_time_with_sex |>
+  left_join(df_rost |> filter(TULINENO == 1) |> select(TUCASEID, sex = TESEX), by = "TUCASEID") |>
   left_join(
     df_act |>
       mutate(is_leisure = str_starts(as.character(TRCODE), "12")) |>
@@ -196,57 +146,43 @@ full_time_with_sex |>
   geom_line(linewidth = 1.2) +
   geom_point(size = 2.5) +
   scale_color_manual(values = c(Men = "#0d1b2a", Women = "#c9a84c")) +
-  labs(
-    title    = "Daily Leisure Hours by Gender — Full-Time Workers",
-    subtitle = "ATUS 2003–2024",
-    x = NULL, y = "Average Hours per Day", color = NULL
-  ) +
+  labs(title = "Daily Leisure Hours by Gender — Full-Time Workers",
+       subtitle = "ATUS 2003-2024",
+       x = NULL, y = "Average Hours per Day", color = NULL) +
   theme_minimal(base_size = 13) +
   theme(legend.position = "bottom")
 ```
 
-### 4. The Ideal Day vs. Reality
-
-This visualization compares what a balanced day might look like against what the
-data shows full-time workers actually experience.
+### Ideal Day vs Reality
 
 ```{r}
 #| label: activity-rings
-#| fig-cap: "Target vs. Typical allocation of daily hours for a full-time worker"
+#| fig-cap: "Target vs typical daily hour allocation"
 
 worker_time <- worker_activities |>
   filter(category %in% c("Work", "Sleep", "Leisure")) |>
   rename(hours = avg_hours)
 
-target <- tibble(
-  category = c("Work", "Sleep", "Leisure"),
-  hours    = c(8, 8, 4),
-  type     = "Target (Ideal)"
-)
-
-typical <- worker_time |>
-  mutate(type = "Typical (ATUS Data)")
-
-rings <- bind_rows(target, typical) |>
+bind_rows(
+  tibble(category = c("Work","Sleep","Leisure"), hours = c(8,8,4), type = "Target (Ideal)"),
+  worker_time |> mutate(type = "Typical (ATUS Data)")
+) |>
   mutate(percent = hours / 24, remainder = 1 - percent) |>
-  pivot_longer(c(percent, remainder), names_to = "part", values_to = "value")
-
-ggplot(rings, aes(x = type, y = value, fill = interaction(category, part))) +
+  pivot_longer(c(percent, remainder), names_to = "part", values_to = "value") |>
+  ggplot(aes(x = type, y = value, fill = interaction(category, part))) +
   geom_col(width = 0.85, color = NA) +
   coord_polar(theta = "y") +
   facet_wrap(~type) +
   scale_fill_manual(values = c(
-    "Work.percent"     = "#0d1b2a", "Work.remainder"    = "#e8e8e8",
-    "Sleep.percent"    = "#1e3a5f", "Sleep.remainder"   = "#e8e8e8",
-    "Leisure.percent"  = "#c9a84c", "Leisure.remainder" = "#e8e8e8"
+    "Work.percent" = "#0d1b2a",    "Work.remainder" = "#e8e8e8",
+    "Sleep.percent" = "#1e3a5f",   "Sleep.remainder" = "#e8e8e8",
+    "Leisure.percent" = "#c9a84c", "Leisure.remainder" = "#e8e8e8"
   )) +
   theme_void(base_size = 13) +
-  theme(
-    legend.position = "bottom",
-    strip.text       = element_text(size = 13, face = "bold"),
-    plot.title       = element_text(size = 15, face = "bold", hjust = 0.5)
-  ) +
-  labs(title = "Ideal vs. Typical Day — Full-Time Workers", fill = "Activity")
+  theme(legend.position = "bottom",
+        strip.text = element_text(size = 13, face = "bold"),
+        plot.title = element_text(size = 15, face = "bold", hjust = 0.5)) +
+  labs(title = "Ideal vs Typical Day — Full-Time Workers", fill = "Activity")
 ```
 
 ---
@@ -254,15 +190,9 @@ ggplot(rings, aes(x = type, y = value, fill = interaction(category, part))) +
 ## Key Takeaways
 
 ::: {.callout-tip title="What 20 years of data reveals"}
-Full-time workers consistently work **more than 8 hours per day** when all work-related
-time is included, leaving less room for sleep and leisure than most time-management
-frameworks assume.
-
-**Gender gaps in leisure persist**: men average roughly 30–45 more minutes of leisure
-per day than women across the study period — a gap that has narrowed but not closed.
-
-The COVID-19 period (2020) produced a sharp but temporary shift in time allocation,
-particularly in commuting and in-person work, with partial reversion by 2022.
+Full-time workers consistently work **more than 8 hours per day**. Men average
+roughly 30-45 more minutes of leisure per day than women — a gap that has
+narrowed but not closed over the full 20-year study period.
 :::
 
 ---

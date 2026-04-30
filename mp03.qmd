@@ -1,6 +1,5 @@
 ---
 title: "US Internal Migration — Forecasting Congressional Reapportionment"
-description: "Using ACS state-to-state migration flows and Huntington-Hill apportionment to forecast 2030 state populations and 2032 congressional seat shifts"
 page-layout: full
 format:
   html:
@@ -21,13 +20,13 @@ Project 05 · R · Demographic Forecasting · Policy Analytics
 
 ::: {.lede}
 Every decade, the U.S. Census reshuffles congressional power based on where people live.
-But people are already moving. Using annual ACS migration flow data, this analysis
-builds a demographic model to forecast 2030 state populations — and predicts which
-states will gain or lose seats in the next reapportionment.
+Using annual ACS migration flow data, this analysis builds a demographic model to
+forecast 2030 state populations and predicts which states will gain or lose seats
+in the next reapportionment.
 :::
 
 ::: {.tag-row}
-<span>R</span><span>tidycensus</span><span>ACS</span><span>Forecasting</span><span>Policy Analytics</span><span>tidyverse</span>
+<span>R</span><span>tidycensus</span><span>ACS</span><span>Forecasting</span><span>Policy Analytics</span>
 :::
 :::
 
@@ -35,30 +34,21 @@ states will gain or lose seats in the next reapportionment.
 
 ## Executive Summary
 
-Using **American Community Survey (ACS) state-to-state migration flow data** from 2015–2024
-combined with baseline population estimates, this analysis builds a simple demographic
-forecasting model to:
-
-1. Estimate state populations in 2030
-2. Apply the **Huntington-Hill method** to apportion 435 House seats
-3. Identify states likely to gain or lose congressional representation
-4. Develop a data-driven strategy for a target state to attract migrants
+Using **ACS state-to-state migration flow data** combined with baseline population
+estimates via tidycensus, this analysis forecasts 2030 state populations and applies
+the **Huntington-Hill method** to apportion 435 House seats.
 
 Key findings:
 
-- Sun Belt states (Florida, Texas, Arizona) continue to show strong net in-migration
+- Sun Belt states continue to show strong net in-migration
 - Rust Belt and Northeast states face structural population outflows
-- Small shifts in migration patterns can change apportionment outcomes for borderline states
-- Targeted advertising in high-outflow metros can efficiently improve a state's growth trajectory
+- Small migration shifts can change apportionment for borderline states
 
 ---
 
 ## Data Acquisition
 
 ### State Population via tidycensus
-
-ACS 1-year population estimates are pulled for all 50 states from 2015 to 2024
-(excluding 2020, when 1-year estimates were not released due to COVID-19 disruption).
 
 ```{r}
 #| label: pop-data
@@ -69,7 +59,6 @@ library(tidyverse)
 library(tidycensus)
 library(readxl)
 library(gt)
-library(fs)
 
 data_dir <- file.path("data", "mp03")
 if (!dir.exists(data_dir)) dir.create(data_dir, recursive = TRUE)
@@ -90,28 +79,23 @@ state_pop <- map_dfr(years, function(yr) {
 })
 ```
 
-### State-to-State Migration Flows (2023–2024)
-
-Migration tables are downloaded from the Census Bureau and parsed into a
-standardized long-format flow table.
+### State-to-State Migration Flows
 
 ```{r}
-#| label: migration-parse
+#| label: migration-data
 
 parse_migration_table <- function(file_path, year_current, year_1y) {
-  raw        <- read_excel(file_path, sheet = "Table", col_names = FALSE)
-  header_row <- as.character(raw[7, ])
-  state_cols <- seq(10, ncol(raw), by = 2)
+  raw         <- read_excel(file_path, sheet = "Table", col_names = FALSE)
+  header_row  <- as.character(raw[7, ])
+  state_cols  <- seq(10, ncol(raw), by = 2)
   state_names <- header_row[state_cols]
-
-  valid_states <- state.name
-  state_names  <- state_names[state_names %in% valid_states]
-  state_cols   <- state_cols[header_row[state_cols] %in% valid_states]
+  state_names <- state_names[state_names %in% state.name]
+  state_cols  <- state_cols[header_row[state_cols] %in% state.name]
 
   data <- read_excel(file_path, sheet = "Table", skip = 8, col_names = FALSE) |>
-    filter(!is.na(...1)) |>
-    filter(!str_starts(...1, "United States")) |>
-    filter(!str_starts(...1, "Puerto Rico"))
+    filter(!is.na(...1),
+           !str_starts(...1, "United States"),
+           !str_starts(...1, "Puerto Rico"))
 
   stationary <- data |>
     select(state_current = 1, population = 4) |>
@@ -147,28 +131,24 @@ parse_migration_table <- function(file_path, year_current, year_1y) {
   bind_rows(stationary, flows)
 }
 
-get_migration_file <- function(year_label, year_current, year_1y, url, filename) {
-  file_path <- file.path(data_dir, filename)
-  if (!file.exists(file_path)) {
-    download.file(url, destfile = file_path, mode = "wb", quiet = TRUE)
-  }
-  parse_migration_table(file_path, year_current, year_1y)
+get_flow_file <- function(url, filename, year_current, year_1y) {
+  fp <- file.path(data_dir, filename)
+  if (!file.exists(fp)) download.file(url, destfile = fp, mode = "wb", quiet = TRUE)
+  parse_migration_table(fp, year_current, year_1y)
 }
 
-flows_2024 <- get_migration_file(
-  "2024", 2024L, 2023L,
+flows_2024 <- get_flow_file(
   paste0("https://www2.census.gov/programs-surveys/demo/tables/",
          "geographic-mobility/2024/state-to-state-migration/",
          "State_to_State_Migration_Table_2024_T13.xlsx"),
-  "state-to-state-2024.xlsx"
+  "state-to-state-2024.xlsx", 2024L, 2023L
 )
 
-flows_2023 <- get_migration_file(
-  "2023", 2023L, 2022L,
+flows_2023 <- get_flow_file(
   paste0("https://www2.census.gov/programs-surveys/demo/tables/",
          "geographic-mobility/2023/state-to-state-migration/",
          "State_to_State_Migration_Table_2023.xlsx"),
-  "state-to-state-2023.xlsx"
+  "state-to-state-2023.xlsx", 2023L, 2022L
 )
 
 flows_all <- bind_rows(flows_2024, flows_2023)
@@ -178,87 +158,37 @@ flows_all <- bind_rows(flows_2024, flows_2023)
 
 ## Analysis
 
-### 1. Net Migration by State (2023–2024)
+### Net Migration by State
 
 ```{r}
 #| label: net-migration
-#| fig-cap: "Top 15 states by net domestic in-migration, 2023–2024"
+#| fig-cap: "Top 15 states by net domestic in-migration 2023-2024"
 
 net_migration <- flows_all |>
   filter(state_current != state_1y, !is.na(population)) |>
-  group_by(state_current, year_current) |>
-  summarize(in_flow  = sum(population[state_current != state_1y], na.rm = TRUE),
-            .groups  = "drop") |>
-  left_join(
-    flows_all |>
-      filter(state_current != state_1y, !is.na(population)) |>
-      group_by(state_1y, year_current) |>
-      summarize(out_flow = sum(population, na.rm = TRUE), .groups = "drop") |>
-      rename(state_current = state_1y),
-    by = c("state_current", "year_current")
-  ) |>
-  mutate(net = in_flow - out_flow)
+  group_by(state_current) |>
+  summarize(
+    in_flow  = sum(population[state_1y != state_current], na.rm = TRUE),
+    out_flow = sum(population[state_1y == state_current], na.rm = TRUE),
+    net      = in_flow - out_flow
+  )
 
 net_migration |>
-  group_by(state_current) |>
-  summarize(avg_net = mean(net, na.rm = TRUE)) |>
-  slice_max(abs(avg_net), n = 15) |>
-  mutate(direction = if_else(avg_net > 0, "Net Gain", "Net Loss")) |>
-  ggplot(aes(x = reorder(state_current, avg_net), y = avg_net / 1000, fill = direction)) +
+  slice_max(abs(net), n = 15) |>
+  mutate(direction = if_else(net > 0, "Net Gain", "Net Loss")) |>
+  ggplot(aes(x = reorder(state_current, net), y = net / 1000, fill = direction)) +
   geom_col(width = 0.7) +
   coord_flip() +
   scale_fill_manual(values = c("Net Gain" = "#c9a84c", "Net Loss" = "#0d1b2a")) +
   scale_y_continuous(labels = scales::comma_format(suffix = "K")) +
-  labs(
-    title    = "Top 15 States by Net Domestic Migration",
-    subtitle = "Average of 2023 and 2024 ACS migration flows",
-    x = NULL, y = "Net Migration (thousands)", fill = NULL
-  ) +
+  labs(title = "Top 15 States by Net Domestic Migration",
+       subtitle = "Average of 2023 and 2024 ACS migration flows",
+       x = NULL, y = "Net Migration (thousands)", fill = NULL) +
   theme_minimal(base_size = 13) +
   theme(legend.position = "bottom")
 ```
 
-### 2. Population Forecast to 2030
-
-```{r}
-#| label: pop-forecast
-#| fig-cap: "Projected 2030 population for top and bottom 10 states"
-
-latest_pop <- state_pop |>
-  filter(year == max(year)) |>
-  select(state_name, pop_base = total_population)
-
-avg_net <- net_migration |>
-  group_by(state_current) |>
-  summarize(avg_net = mean(net, na.rm = TRUE)) |>
-  rename(state_name = state_current)
-
-forecast_2030 <- latest_pop |>
-  left_join(avg_net, by = "state_name") |>
-  mutate(
-    avg_net      = replace_na(avg_net, 0),
-    pop_2030     = pop_base + avg_net * 6,
-    pct_change   = (pop_2030 - pop_base) / pop_base
-  )
-
-forecast_2030 |>
-  slice_max(abs(pct_change), n = 10) |>
-  mutate(direction = if_else(pct_change > 0, "Growth", "Decline")) |>
-  ggplot(aes(x = reorder(state_name, pct_change), y = pct_change, fill = direction)) +
-  geom_col(width = 0.7) +
-  coord_flip() +
-  scale_fill_manual(values = c(Growth = "#c9a84c", Decline = "#0d1b2a")) +
-  scale_y_continuous(labels = scales::percent) +
-  labs(
-    title    = "Projected Population Change 2024–2030",
-    subtitle = "Based on average ACS net migration flows",
-    x = NULL, y = "Projected % Change", fill = NULL
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(legend.position = "bottom")
-```
-
-### 3. Congressional Apportionment — Huntington-Hill Method
+### Congressional Apportionment — Huntington-Hill Method
 
 ```{r}
 #| label: apportionment
@@ -268,49 +198,39 @@ huntington_hill <- function(populations, n_seats = 435) {
   names(seats) <- names(populations)
   for (i in seq_len(n_seats - length(populations))) {
     priority <- populations / sqrt(seats * (seats + 1))
-    winner   <- which.max(priority)
-    seats[winner] <- seats[winner] + 1L
+    seats[which.max(priority)] <- seats[which.max(priority)] + 1L
   }
   seats
 }
 
-pop_vec_2030 <- setNames(forecast_2030$pop_2030,
-                         forecast_2030$state_name)
-pop_vec_base <- setNames(forecast_2030$pop_base,
-                         forecast_2030$state_name)
+latest_pop <- state_pop |>
+  filter(year == max(year)) |>
+  select(state_name, pop_base = total_population)
 
-seats_2030 <- huntington_hill(pop_vec_2030)
-seats_base <- huntington_hill(pop_vec_base)
+forecast_2030 <- latest_pop |>
+  left_join(net_migration |> rename(state_name = state_current), by = "state_name") |>
+  mutate(
+    net      = replace_na(net, 0),
+    pop_2030 = pop_base + net * 6
+  )
 
-seat_changes <- tibble(
-  state     = names(seats_2030),
-  seats_now = as.integer(seats_base),
+seats_now  <- huntington_hill(setNames(forecast_2030$pop_base,  forecast_2030$state_name))
+seats_2030 <- huntington_hill(setNames(forecast_2030$pop_2030, forecast_2030$state_name))
+
+tibble(
+  state      = names(seats_2030),
+  seats_now  = as.integer(seats_now),
   seats_2030 = as.integer(seats_2030),
-  change    = as.integer(seats_2030) - as.integer(seats_base)
+  change     = as.integer(seats_2030) - as.integer(seats_now)
 ) |>
   filter(change != 0) |>
-  arrange(desc(change))
-
-seat_changes |>
+  arrange(desc(change)) |>
   gt() |>
-  cols_label(
-    state      = "State",
-    seats_now  = "Current Seats",
-    seats_2030 = "Projected 2030",
-    change     = "Change"
-  ) |>
-  tab_header(
-    title    = "Projected Congressional Seat Changes — 2032 Reapportionment",
-    subtitle = "Based on ACS migration flow model"
-  ) |>
-  tab_style(
-    style = cell_fill(color = "#eaf4ef"),
-    locations = cells_body(rows = change > 0)
-  ) |>
-  tab_style(
-    style = cell_fill(color = "#fde8e8"),
-    locations = cells_body(rows = change < 0)
-  )
+  cols_label(state = "State", seats_now = "Current Seats",
+             seats_2030 = "Projected 2030", change = "Change") |>
+  tab_header(title = "Projected Congressional Seat Changes — 2032 Reapportionment") |>
+  tab_style(style = cell_fill(color = "#eaf4ef"), locations = cells_body(rows = change > 0)) |>
+  tab_style(style = cell_fill(color = "#fde8e8"), locations = cells_body(rows = change < 0))
 ```
 
 ---
@@ -319,14 +239,9 @@ seat_changes |>
 
 ::: {.callout-tip title="What migration data tells us about political power"}
 Congressional representation follows population — and population follows opportunity.
-The states gaining seats are overwhelmingly those with **lower costs of living,
-warmer climates, and growing job markets** in tech, healthcare, and logistics.
-
-States at risk of losing seats have several levers available: targeted economic
-development, housing policy reform, and — most practically — **data-driven
-recruitment campaigns** aimed at high-outflow metros in neighboring states.
-
-This model treats migration as a **policy variable**, not just a demographic outcome.
+States gaining seats have **lower costs of living, warmer climates, and growing
+job markets**. States at risk of losing seats can use data-driven recruitment
+campaigns targeting high-outflow metros in neighboring states.
 :::
 
 ---
