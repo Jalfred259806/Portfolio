@@ -3,11 +3,11 @@ project:
   output-dir: docs
   render:
     - index.qmd
-    - numismatica-mexico.qmd
-    - credit-risk.qmd
-    - mp01.qmd
-    - mp02.qmd
-    - mp03.qmd
+    - projects/numismatica-mexico.qmd
+    - projects/credit-risk.qmd
+    - projects/mp01.qmd
+    - projects/mp02.qmd
+    - projects/mp03.qmd
 
 website:
   title: "Javier Bravo Bernal"
@@ -22,15 +22,15 @@ website:
       - text: "Projects"
         menu:
           - text: "Numismática México — Sales Strategy"
-            href: numismatica-mexico.html
+            href: projects/numismatica-mexico.html
           - text: "Credit Risk Classification"
-            href: credit-risk.html
+            href: projects/credit-risk.html
           - text: "Campus Diversity After SFFA"
-            href: mp01.html
+            href: projects/mp01.html
           - text: "American Time Use Survey"
-            href: mp02.html
+            href: projects/mp02.html
           - text: "US Migration & Reapportionment"
-            href: mp03.html
+            href: projects/mp03.html
       - text: "Skills"
         href: index.html#skills
       - text: "Experience"
