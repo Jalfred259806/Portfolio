@@ -7,6 +7,8 @@ format:
     toc-location: left
     toc-depth: 3
     code-fold: true
+execute:
+  eval: false
 engine: knitr
 ---
 
@@ -52,6 +54,7 @@ Key findings:
 
 ```{r}
 #| label: pop-data
+#| eval: false
 #| message: false
 #| warning: false
 
@@ -83,6 +86,7 @@ state_pop <- map_dfr(years, function(yr) {
 
 ```{r}
 #| label: migration-data
+#| eval: false
 
 parse_migration_table <- function(file_path, year_current, year_1y) {
   raw         <- read_excel(file_path, sheet = "Table", col_names = FALSE)
@@ -162,6 +166,7 @@ flows_all <- bind_rows(flows_2024, flows_2023)
 
 ```{r}
 #| label: net-migration
+#| eval: false
 #| fig-cap: "Top 15 states by net domestic in-migration 2023-2024"
 
 net_migration <- flows_all |>
@@ -192,6 +197,7 @@ net_migration |>
 
 ```{r}
 #| label: apportionment
+#| eval: false
 
 huntington_hill <- function(populations, n_seats = 435) {
   seats <- rep(1L, length(populations))

@@ -7,6 +7,8 @@ format:
     toc-location: left
     toc-depth: 3
     code-fold: true
+execute:
+  eval: false
 engine: knitr
 ---
 
@@ -50,6 +52,7 @@ Key findings:
 
 ```{r}
 #| label: acquire-data
+#| eval: false
 #| message: false
 #| warning: false
 
@@ -136,6 +139,7 @@ The dataset covers **`r scales::comma(distinct_institutions)` institutions** acr
 
 ```{r}
 #| label: national-trends
+#| eval: false
 #| fig-cap: "Undergraduate enrollment share by race/ethnicity, 2010-2024"
 
 IPEDS |>
@@ -170,6 +174,7 @@ IPEDS |>
 
 ```{r}
 #| label: cuny-enrollment
+#| eval: false
 IPEDS |>
   filter(year == 2024, level == "first year undergrad",
          str_detect(institution_name, "CUNY")) |>
@@ -190,6 +195,7 @@ IPEDS |>
 
 ```{r}
 #| label: baruch-trend
+#| eval: false
 IPEDS |>
   filter(str_detect(institution_name, "Baruch"), level == "all undergrad") |>
   group_by(year) |>

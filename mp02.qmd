@@ -7,6 +7,8 @@ format:
     toc-location: left
     toc-depth: 3
     code-fold: true
+execute:
+  eval: false
 engine: knitr
 ---
 
@@ -49,6 +51,7 @@ Key findings:
 
 ```{r}
 #| label: load-data
+#| eval: false
 #| message: false
 #| warning: false
 
@@ -85,6 +88,7 @@ df_act  <- load_atus_data("act")
 
 ```{r}
 #| label: worker-time
+#| eval: false
 #| message: false
 #| warning: false
 #| fig-cap: "Average daily hours by activity category"
@@ -126,6 +130,7 @@ worker_activities |>
 
 ```{r}
 #| label: gender-leisure
+#| eval: false
 #| fig-cap: "Average daily leisure hours by gender"
 
 df_resp |>
@@ -157,6 +162,7 @@ df_resp |>
 
 ```{r}
 #| label: activity-rings
+#| eval: false
 #| fig-cap: "Target vs typical daily hour allocation"
 
 worker_time <- worker_activities |>
