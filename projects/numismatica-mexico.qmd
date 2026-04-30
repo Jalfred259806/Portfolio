@@ -1,0 +1,257 @@
+---
+title: "Numismática México — Year-End Holiday Sales Strategy"
+description: "Tableau data story driving a marketing recommendation for a Mexican numismatics brand"
+format:
+  html:
+    toc: false
+    css: ../styles.css
+    page-layout: full
+engine: knitr
+---
+
+```{=html}
+<div style="padding: 1.2rem 0 0 4rem;">
+  <a href="../index.html#projects" class="proj-back">← Back to Projects</a>
+</div>
+
+<div class="proj-hero">
+  <div class="proj-tag">// Project 01 · Data Visualization &amp; Marketing Analytics</div>
+  <h1>Numismática México<br>Year-End Holiday Sales Strategy</h1>
+  <p class="proj-lede">
+    A Tableau-based data story analyzing four years of sales data for a Mexican
+    numismatics retailer. The work identified the brand's "star product,"
+    quantified the lift from paid advertising, mapped product preferences across
+    states, and produced a focused marketing playbook for the Q4 holiday window.
+  </p>
+  <div class="proj-tags">
+    <span>Tableau</span>
+    <span>Data Visualization</span>
+    <span>Marketing Analytics</span>
+    <span>Storytelling</span>
+    <span>Business Strategy</span>
+  </div>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi-card">
+    <div class="kpi-num">$50K+</div>
+    <div class="kpi-label">Peak monthly profit (MXN) · Sept–Dec 2021</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">25%</div>
+    <div class="kpi-label">Share of Q4 profits from one star product</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">64%</div>
+    <div class="kpi-label">Star-product sales attributable to ads</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">$23K</div>
+    <div class="kpi-label">Cumulative ad-driven profit · Central Region</div>
+  </div>
+</div>
+
+<div class="proj-section">
+
+  <h2>Context</h2>
+  <p>
+    Numismática México is a retailer of commemorative Mexican coins and bills sold
+    to collectors across the country. Like many specialty retail businesses, its
+    revenue is heavily seasonal — the September-to-December window consistently
+    delivers the strongest profit. The question driving this analysis was simple:
+  </p>
+
+  <div class="callout-box">
+    <strong>How can the brand replicate (or beat) its 2021 holiday peak — and where
+    should the marketing budget go?</strong>
+  </div>
+
+  <p>
+    To answer it I built a multi-chapter Tableau story that walks a non-technical
+    stakeholder from the high-level seasonality picture down to product- and
+    state-level recommendations.
+  </p>
+
+  <h2>The Data Story</h2>
+  <p>
+    The Tableau workbook is structured as a six-chapter narrative. Each chapter
+    isolates one decision-relevant insight, building toward the final
+    recommendations.
+  </p>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-02.jpg" alt="Story agenda">
+    <figcaption>Story structure — six chapters from seasonality to regional ad impact.</figcaption>
+  </figure>
+
+  <h2>1 · Seasonality is the foundation</h2>
+  <p>
+    The first chapter establishes that holiday sales are not an opinion but a
+    consistent, multi-year pattern. From September to December 2021 monthly profit
+    exceeded 50,000 MXN — the highest peak on record — confirming Q4 as the window
+    where the marketing spend should be concentrated.
+  </p>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-05.jpg" alt="Year-end 2021 peak profits">
+    <figcaption>Year-end 2021 recorded the highest sales profits on record.</figcaption>
+  </figure>
+
+  <p>
+    The natural counter-question — <em>"what happens after the peak?"</em> — is
+    answered in the next chapter. January 2022 dropped to ~15K MXN, but that drop
+    is also the moment paid advertising starts contributing for the first time.
+  </p>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-06.jpg" alt="Sales decline in January 2022">
+    <figcaption>Sharp post-holiday drop — but also the first month with ad-supported sales.</figcaption>
+  </figure>
+
+  <h2>2 · Advertising changes the curve</h2>
+  <p>
+    By March 2022 ad-supported sales overtook organic sales for the first time, and
+    by late July 2022 ad-attributed profit cleared 20K MXN. This is the most
+    important behavioral finding in the deck: paid advertising doesn't just add a
+    flat lift, it shifts the slope of the recovery after the holiday peak.
+  </p>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-07.jpg" alt="Ad-supported sales surpass organic">
+    <figcaption>Ad-supported profits surpass organic, then exceed 20K MXN by late July 2022.</figcaption>
+  </figure>
+
+  <h2>3 · There is a star product</h2>
+  <p>
+    Not every product contributed equally. The Commemorative 5, 10 &amp; 40 Peso
+    Bills &amp; Coins Binder generated <strong>42,466 MXN</strong> of profit
+    between September and December 2021 — roughly <strong>25% of the entire Q4
+    total</strong> (175,826 MXN).
+  </p>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-08.jpg" alt="Star product accounts for 25% of Q4 profits">
+    <figcaption>The Commemorative Binder alone delivered ~25% of Sept–Dec 2021 profit.</figcaption>
+  </figure>
+
+  <p>
+    When advertising entered the picture, this product responded most strongly:
+    <strong>~64% of its post-launch sales are attributable to ads.</strong>
+  </p>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-09.jpg" alt="64% of star product sales are ad-driven">
+    <figcaption>After ads launched, ~64% of star-product sales were advertising-driven.</figcaption>
+  </figure>
+
+  <p>
+    The same product held the #1 position across every period studied — an unusual
+    level of stability that makes it the natural anchor for any campaign.
+  </p>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-11.jpg" alt="Top product consistency">
+    <figcaption>The same product held the top-selling position across all measurement periods.</figcaption>
+  </figure>
+
+  <div class="callout-box">
+    <strong>Caveat — Feb–Mar 2022 dip.</strong> Ad attribution on the star product
+    dipped noticeably in this window. The recommendation includes a root-cause
+    analysis before scaling spend, since campaign fatigue, creative issues, or
+    platform-side attribution changes are all plausible explanations.
+  </div>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-10.jpg" alt="Advertising performance dip Feb-Mar 2022">
+    <figcaption>Advertising impact dipped Feb–Mar 2022 — flagged for follow-up RCA.</figcaption>
+  </figure>
+
+  <h2>4 · Geography matters</h2>
+  <p>
+    The national star product is <strong>not</strong> the top performer in every
+    state. A state-by-state breakdown surfaces a second high-impact product that
+    sits <em>outside</em> the national Top 3 — an untapped opportunity for regional
+    campaigns.
+  </p>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-12.jpg" alt="Nationwide product sales breakdown">
+    <figcaption>Best-selling product varies by state — the national star isn't always the local star.</figcaption>
+  </figure>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-13.jpg" alt="Key products identified">
+    <figcaption>Two products with disproportionate impact — one of them outside the overall Top 3.</figcaption>
+  </figure>
+
+  <p>
+    Regional ad-driven profit is heavily concentrated. The Central Region alone has
+    generated approximately <strong>23K MXN</strong> in cumulative ad-attributed
+    profit — a clear signal of where the next campaign dollar earns the most.
+  </p>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-15.jpg" alt="Regional advertising sales impact">
+    <figcaption>Cumulative ad-driven profit by region — Central Region leads.</figcaption>
+  </figure>
+
+  <h2>Strategic Recommendations</h2>
+  <p>Three campaigns, sequenced by risk and confidence:</p>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-16.jpg" alt="Strategic recommendations summary">
+    <figcaption>The three-campaign playbook: star product, Top 5 replication, regional focus.</figcaption>
+  </figure>
+
+  <ol>
+    <li>
+      <strong>Prioritize the star product in high-revenue states.</strong>
+      Highest-confidence move; the product has demonstrated price-insensitivity and
+      a strong ad lift on a customer base that already recognizes the brand.
+    </li>
+    <li>
+      <strong>Replicate the January star-product playbook across the broader catalog.</strong>
+      The proven-creative approach from the early-2022 campaign is the lowest-cost
+      way to lift Top 5 products without rebuilding strategy from scratch.
+    </li>
+    <li>
+      <strong>Run a Top-5 product campaign in high-revenue states.</strong>
+      Combines (1) and (2) — uses the star product as the anchor and the Top 5 for
+      cross-sell, targeting only the regions where the existing customer base
+      already lifts ROAS.
+    </li>
+  </ol>
+
+  <figure class="slide-figure">
+    <img src="assets/numismatica/slide-17.jpg" alt="Key benefits of recommendations">
+    <figcaption>Why each recommendation works — the underlying business levers.</figcaption>
+  </figure>
+
+  <h2>Tools &amp; approach</h2>
+  <table class="results-table">
+    <thead>
+      <tr><th>Layer</th><th>Tool</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Data prep</td><td>Excel / CSV cleaning, Tableau Prep</td></tr>
+      <tr><td>Visualization</td><td>Tableau Desktop (Tableau Story format)</td></tr>
+      <tr><td>Narrative design</td><td>Six-chapter structure, decision-led question framing</td></tr>
+      <tr><td>Delivery</td><td>PowerPoint deck for stakeholder presentation</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Resources</h2>
+  <ul>
+    <li>📥 <a href="files/DataVis_Project_EN.pptx">Download the full presentation (.pptx)</a></li>
+  </ul>
+
+</div>
+
+<div class="site-footer">
+  Last Updated:
+```
+`r format(Sys.time(), "%B %d, %Y")`
+```{=html}
+  &nbsp;·&nbsp; Javier Bravo Bernal &nbsp;·&nbsp; Built with Quarto &amp; R
+</div>
+```

@@ -1,0 +1,224 @@
+---
+title: "Campus Diversity After SFFA — A National Enrollment Analysis"
+page-layout: full
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-depth: 3
+    code-fold: true
+execute:
+  eval: false
+engine: knitr
+---
+
+::: {.proj-hero}
+::: {.eyebrow}
+Project 03 · R · Policy Analytics · Education Data
+:::
+
+# Campus Diversity After SFFA
+### A National Enrollment Analysis (2010–2024)
+
+::: {.lede}
+In June 2023, the Supreme Court ruling in Students for Fair Admissions v. Harvard
+ended race-conscious admissions at U.S. universities. This analysis uses 15 years of
+federal enrollment data to measure what actually changed and what was already in motion
+long before the ruling.
+:::
+
+::: {.tag-row}
+<span>R</span><span>tidyverse</span><span>IPEDS</span><span>gt</span><span>Policy Analysis</span>
+:::
+:::
+
+---
+
+## Executive Summary
+
+Using enrollment microdata from the **Integrated Postsecondary Education Data System (IPEDS)**
+across 3,000+ institutions from 2010 to 2024, this analysis examines whether the SFFA ruling
+produced a measurable shift in campus racial and ethnic composition.
+
+Key findings:
+
+- Many diversity trends predate 2023 and reflect regional population shifts
+- Baruch College shows a distinct demographic trajectory vs national averages
+- CUNY institutions enroll a significant share of New York first-year undergraduates
+
+---
+
+## Data Acquisition
+
+```{r}
+#| label: acquire-data
+#| eval: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(glue)
+library(gt)
+
+acquire_ipeds_data <- function(start_year = 2010, end_year = 2024) {
+  data_dir <- file.path("data", "mp01")
+  if (!dir.exists(data_dir)) dir.create(data_dir, showWarnings = FALSE, recursive = TRUE)
+  YEARS <- seq(start_year, end_year)
+
+  EFA_ALL <- map(YEARS, function(yy) {
+    ef_url <- if (yy <= 2022) {
+      glue("https://nces.ed.gov/ipeds/datacenter/data/EF{yy}A.zip")
+    } else {
+      glue("https://nces.ed.gov/ipeds/data-generator?year={yy}&tableName=EF{yy}A&HasRV=0&type=csv")
+    }
+    ef_file <- file.path(data_dir, glue("ef{yy}a.csv.zip"))
+    if (!file.exists(ef_file)) download.file(ef_url, destfile = ef_file, quiet = TRUE, mode = "wb")
+    read_csv(ef_file, show_col_types = FALSE) |>
+      mutate(
+        year = yy,
+        enrollment_m_asia = EFASIAM, enrollment_f_asia = EFASIAW,
+        enrollment_m_bkaa = EFBKAAM, enrollment_f_bkaa = EFBKAAW,
+        enrollment_m_hisp = EFHISPM, enrollment_f_hisp = EFHISPW,
+        enrollment_m_whit = EFWHITM, enrollment_f_whit = EFWHITW,
+        enrollment_m_aian = EFAIANM, enrollment_f_aian = EFAIANW,
+        enrollment_m_nhpi = EFNHPIM, enrollment_f_nhpi = EFNHPIW,
+        enrollment_m_2mor = EF2MORM, enrollment_f_2mor = EF2MORW,
+        enrollment_m_unkn = EFUNKNM, enrollment_f_unkn = EFUNKNW,
+        enrollment_m_nral = EFNRALM, enrollment_f_nral = EFNRALW
+      ) |>
+      filter((EFALEVEL %in% c(2, 12)) | (LINE %in% c(1, 15))) |>
+      mutate(level = case_when(
+        EFALEVEL == 2       ~ "all undergrad",
+        EFALEVEL == 12      ~ "all graduate",
+        LINE %in% c(1, 15) ~ "first year undergrad"
+      )) |>
+      select(institution_id = UNITID, year, level, starts_with("enrollment_")) |>
+      group_by(institution_id, year, level) |>
+      summarize(across(starts_with("enrollment_"), sum), .groups = "drop")
+  }) |> bind_rows()
+
+  DESC_ALL <- map(YEARS, function(yy) {
+    hd_url <- if (yy <= 2022) {
+      glue("https://nces.ed.gov/ipeds/datacenter/data/HD{yy}.zip")
+    } else {
+      glue("https://nces.ed.gov/ipeds/data-generator?year={yy}&tableName=HD{yy}&HasRV=0&type=csv")
+    }
+    hd_file <- file.path(data_dir, glue("hd{yy}.csv.zip"))
+    if (!file.exists(hd_file)) download.file(hd_url, destfile = hd_file, quiet = TRUE, mode = "wb")
+    suppressWarnings(
+      read_csv(hd_file, show_col_types = FALSE,
+               locale = locale(encoding = if_else(yy == 2024, "utf-8", "windows-1252"))) |>
+        mutate(year = yy) |>
+        select(institution_id = UNITID, institution_name = INSTNM, state = STABBR, year)
+    )
+  }) |> bind_rows()
+
+  inner_join(EFA_ALL, DESC_ALL, join_by(institution_id, year))
+}
+
+IPEDS <- acquire_ipeds_data() |>
+  mutate(
+    total_students = rowSums(across(starts_with("enrollment_")), na.rm = TRUE),
+    total_female   = rowSums(across(matches("enrollment_f_")), na.rm = TRUE),
+    asian_students = enrollment_m_asia + enrollment_f_asia,
+    black_students = enrollment_m_bkaa + enrollment_f_bkaa,
+    hisp_students  = enrollment_m_hisp + enrollment_f_hisp,
+    white_students = enrollment_m_whit + enrollment_f_whit
+  )
+
+distinct_institutions <- IPEDS |> distinct(institution_id) |> nrow()
+```
+
+The dataset covers **3,000+ institutions** across all 50 states.
+
+---
+
+## Analysis
+
+### National Enrollment Trends by Race/Ethnicity
+
+```{r}
+#| label: national-trends
+#| eval: false
+#| fig-cap: "Undergraduate enrollment share by race/ethnicity, 2010-2024"
+
+IPEDS |>
+  filter(level == "all undergrad") |>
+  group_by(year) |>
+  summarize(
+    Asian    = sum(asian_students, na.rm = TRUE),
+    Black    = sum(black_students, na.rm = TRUE),
+    Hispanic = sum(hisp_students,  na.rm = TRUE),
+    White    = sum(white_students, na.rm = TRUE),
+    Total    = sum(total_students, na.rm = TRUE)
+  ) |>
+  mutate(across(Asian:White, ~ .x / Total)) |>
+  select(-Total) |>
+  pivot_longer(-year, names_to = "group", values_to = "share") |>
+  ggplot(aes(x = year, y = share, color = group)) +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_color_manual(values = c(
+    Asian = "#c9a84c", Black = "#1e3a5f",
+    Hispanic = "#2e8b57", White = "#5a6a7e"
+  )) +
+  labs(title = "National Undergraduate Enrollment Share by Race/Ethnicity",
+       subtitle = "IPEDS Fall Enrollment 2010-2024",
+       x = NULL, y = "Share of Total Enrollment", color = NULL) +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "bottom")
+```
+
+### First-Year Enrollment at CUNY (2024)
+
+```{r}
+#| label: cuny-enrollment
+#| eval: false
+IPEDS |>
+  filter(year == 2024, level == "first year undergrad",
+         str_detect(institution_name, "CUNY")) |>
+  group_by(institution_name) |>
+  summarize(first_year = sum(total_students)) |>
+  mutate(pct_total = first_year / sum(first_year)) |>
+  arrange(desc(first_year)) |>
+  gt() |>
+  cols_label(institution_name = "Institution",
+             first_year = "First-Year Students",
+             pct_total = "Share of CUNY Total") |>
+  tab_header(title = "First-Year Undergraduate Enrollment at CUNY (2024)") |>
+  fmt_percent(pct_total, decimals = 1) |>
+  fmt_number(first_year, decimals = 0)
+```
+
+### Baruch College Enrollment Over Time
+
+```{r}
+#| label: baruch-trend
+#| eval: false
+IPEDS |>
+  filter(str_detect(institution_name, "Baruch"), level == "all undergrad") |>
+  group_by(year) |>
+  summarize(total_undergrad = sum(total_students)) |>
+  arrange(year) |>
+  mutate(yoy_change = (total_undergrad - lag(total_undergrad)) / lag(total_undergrad)) |>
+  gt() |>
+  cols_label(year = "Year", total_undergrad = "Enrollment", yoy_change = "YoY Change") |>
+  tab_header(title = "Baruch College Undergraduate Enrollment (2010-2024)") |>
+  fmt_percent(yoy_change, decimals = 1) |>
+  fmt_number(total_undergrad, decimals = 0)
+```
+
+---
+
+## Key Takeaways
+
+::: {.callout-tip title="What the data shows"}
+Demographic shifts in U.S. higher education are **long-term structural trends**.
+Hispanic and multiracial enrollment has grown steadily since 2010 driven by
+changing U.S. population demographics, not admissions policy alone.
+:::
+
+---
+
+*Analysis by Javier Bravo Bernal · [Back to Portfolio](index.html#projects)*
